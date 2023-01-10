@@ -1,13 +1,13 @@
 import { Button, Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerOverlay, HStack, useDisclosure, VStack } from '@chakra-ui/react';
 import React from 'react';
-import {RiMenu5Fill} from 'react-icons/ri'
+import {RiDashboardFill, RiLogoutBoxLine, RiMenu5Fill} from 'react-icons/ri'
 import { Link } from 'react-router-dom';
 import { ColorModeSwitcher } from '../../ColorModeSwitcher';
 
 const Header = () => {
   const { onClose, isOpen, onOpen } = useDisclosure()
-  const ButtonLink = ({ path='/', name='Home' }) => (
-    <Link to={path}>
+  const ButtonLink = ({ path='/', name='Home', onClose}) => (
+    <Link onClick={onClose} to={path}>
       <Button variant={'ghost'}>
         {name}
       </Button>
@@ -15,7 +15,15 @@ const Header = () => {
     
     
   )
+  const logoutHandler = () => {
+    console.log("Logged Out")
+    onClose();
+  }
   const isAuthenticated = false;
+  const user = {
+    role:"admin",
+ 
+  }
   
   return (
     <>
@@ -37,16 +45,65 @@ const Header = () => {
           <DrawerContent>
             <DrawerHeader borderBottomWidth={'1px'}>BOOK WORMS</DrawerHeader>
             <DrawerBody>
-              <VStack spacing={'4'} alignItems={'flex-start'} >
-                <ButtonLink />
-                <ButtonLink path="/books" name="All Books" />
-                <ButtonLink path="/books/classics" name={"Classics"} />
-                <ButtonLink path="/books/modern-books" name="Modern Books" />
-                <ButtonLink path="/about" name="About" />
-                <HStack>
-                  
+              <VStack spacing={'4'} alignItems={'flex-start'}>
+                <ButtonLink onClose={onClose} />
+                <ButtonLink onClose={onClose} path="/books" name="All Books" />
+                <ButtonLink
+                  onClose={onClose}
+                  path="/books/classics"
+                  name={'Classics'}
+                />
+                <ButtonLink
+                  onClose={onClose}
+                  path="/books/modern-books"
+                  name="Modern Books"
+                />
+                <ButtonLink onClose={onClose} path="/about" name="About" />
+                <HStack
+                  justifyContent={'space-evenly'}
+                  width={'80%'}
+                  bottom={'2rem'}
+                  position={'absolute'}
+                >
+                  {isAuthenticated ? (
+                    <>
+                      <VStack>
+                        <HStack>
+                          <Link onClick={onClose} to="/profile">
+                            <Button variant={'ghost'} colorScheme={'blue'}>
+                              Profile
+                            </Button>
+                          </Link>
 
+                          <Button
+                            onClick={logoutHandler}
+                            variant={'ghost'}
+                            colorScheme={'red'}
+                          >
+                            <RiLogoutBoxLine /> &nbsp; Logout
+                          </Button>
+                        </HStack>
+                        {user && user.role === 'admin' && (
+                          <Link onClick={onClose} to="/admin/dashboard">
+                            <Button variant={'ghost'} colorScheme={'purple'}>
+                              <RiDashboardFill /> &nbsp; DashBoard
+                            </Button>
+                          </Link>
+                        )}
+                      </VStack>
+                    </>
+                  ) : (
+                    <>
+                      <Link onClick={onClose} to="/login">
+                        <Button colorScheme={'blue'}>Login</Button>
+                      </Link>
+                      <p>OR</p>
 
+                      <Link onClick={onClose} to="/register">
+                        <Button colorScheme={'blue'}>Sign Up</Button>
+                      </Link>
+                    </>
+                  )}
                 </HStack>
               </VStack>
             </DrawerBody>

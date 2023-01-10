@@ -1,10 +1,11 @@
 import React from 'react';
 import './home.css';
 import { Link } from 'react-router-dom';
-import ctn from '../assets/Images/crtn.png'
-import Intro from '../assets/video/vid.mp4';
+import ctn from '../../assets/Images/crtn.png'
+import Intro from '../../assets/video/vid.mp4';
 import { GoMarkGithub } from 'react-icons/go';
 import { AiFillLinkedin } from 'react-icons/ai';
+
 import {
   Box,
   Text,
@@ -27,8 +28,18 @@ const Homepage = () => {
           alignItems="center"
           spacing={['16', '56']}
         >
-          <VStack width={'full'} alignItems={['center', 'flex-end']}>
-            <Heading children="The Book Heaven." size={'2xl'} />
+          <VStack
+            width={'full'}
+            spacing={'6'}
+            fontSize={'xl'}
+            alignItems={['center', 'flex-end']}
+            fontFamily={'cursive'}
+          >
+            <Heading
+              fontFamily={'cursive'}
+              children="The Book Heaven."
+              size={'2xl'}
+            />
             <Text children="You can Find your favourte books here." />
             <Link to="/books">
               <Button size={'lg'} colorScheme={'blue'}>
@@ -39,9 +50,7 @@ const Homepage = () => {
           <Image
             className="vg"
             boxSize={'md'}
-            src={
-              ctn
-            }
+            src={ctn}
             objectFit={'contain'}
           />
         </Stack>
@@ -64,7 +73,7 @@ const Homepage = () => {
       </Box>
       <div className="container2">
         <video
-          autoPlay={true}
+          autoPlay
           controls
           controlsList="nodownload nofullscreen noremoteplayback"
           disablePictureInPicture

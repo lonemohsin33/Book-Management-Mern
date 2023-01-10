@@ -13,8 +13,10 @@ import {
 } from '@chakra-ui/react';
 import { ColorModeSwitcher } from './ColorModeSwitcher';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Homepage from './components/Homepage';
+import Homepage from './components/Home/Homepage';
 import Header from './components/layouts/Header';
+import Books from './components/Books/Books';
+import Footer from './components/layouts/Footer';
 
 function App() {
   return (
@@ -23,8 +25,10 @@ function App() {
         <Header/>
         <Routes>
           <Route path="/" element={<Homepage />} />
+          <Route path='/books' element={ <Books/> } />
           
         </Routes>
+        <Footer/>
       </Router>
     </>
   );

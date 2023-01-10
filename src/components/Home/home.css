@@ -10,8 +10,7 @@
 @keyframes animesA {
     to{
         transform: translateX(-20px);
-    }
-    
+    }  
 }
 .cont > svg{
     color: white;
@@ -36,4 +35,17 @@
     outline: none;
 
     box-shadow: rgba(255, 221, 0);
+}
+.books{
+    width: 250px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    transition: all 0.5s;
+}
+.books:hover{
+    transform: translateY(-10px);
+}
+.footer:hover{
+    color: blue;
+   
 }
