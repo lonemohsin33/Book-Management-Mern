@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Container, Heading, HStack, Input, Stack , VStack,Text, Image} from "@chakra-ui/react"
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 const Book = ({ title, imageSrc, author, description, tags, price, id, addtoplaylisthandler }) => {
   
@@ -54,6 +54,15 @@ const Book = ({ title, imageSrc, author, description, tags, price, id, addtoplay
 const Books = () => {
   const [keyword, setKeyword] = useState("")
   const [category, setCategory] = useState("")
+  useEffect(() => {
+    fetch('/api/books').then(res => {
+      if (res.ok) {
+        return res.json()
+      }
+    }).then(jsonResponse=>console.log(jsonResponse))
+    },[])
+    
+ 
   const addtoplaylisthandler = () => {
     console.log("Added to playlist")
     

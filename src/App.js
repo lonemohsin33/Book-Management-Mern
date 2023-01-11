@@ -17,18 +17,26 @@ import Homepage from './components/Home/Homepage';
 import Header from './components/layouts/Header';
 import Books from './components/Books/Books';
 import Footer from './components/layouts/Footer';
+import Login from './components/Auth/Login';
+import Register from './components/Auth/Register';
+import ForgotPass from './components/Auth/ForgotPass';
+import Resetpass from './components/Auth/Resetpass';
 
 function App() {
   return (
     <>
       <Router>
-        <Header/>
+        <Header />
         <Routes>
           <Route path="/" element={<Homepage />} />
-          <Route path='/books' element={ <Books/> } />
+          <Route path="/books" element={<Books />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path='/forgotpassword' element={<ForgotPass />} />
+          <Route path='/resetpassword/:token' element={<Resetpass/>}/> 
           
         </Routes>
-        <Footer/>
+        <Footer />
       </Router>
     </>
   );
