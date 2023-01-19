@@ -2,24 +2,25 @@ import React from 'react'
 import {Box, Button, Container, FormLabel, Heading, Input, VStack} from '@chakra-ui/react'
 import { useState,useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import login from '../../redux/actions/userActions'
 
 const Login = () => {
     const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const resonse = fetch('/api/login', {
-        method:'post',
-        body:'formData'
-    }
-    ).then(res => {
-        if(res.ok) return res.json()
-    })
+  const [password, setPassword] = useState('')
+  const dispatch = useDispatch();
+  const submitHandler = (e) => {
+    e.preventDefault();
+    dispatch(login(email, password))
+  }
+      
 
   return (
     <Container h={'95vh'}>
       <VStack h={'full'} justifyContent={'center'} spacing={'12'}>
-        <Heading children="Welcome to The Book Heaven" fontFamily={'cursive'}/>
+        <Heading children="Welcome to The Book Heaven" fontFamily={'cursive'} />
 
-        <form style={{ width: '100%' }}>
+        <form onSubmit={submitHandler} style={{ width: '100%' }}>
           <Box my={'6'}>
             <FormLabel
               htmlFor="email"
@@ -66,13 +67,20 @@ const Login = () => {
           </Box>
           <Button my={'4'} type="submit" colorScheme={'blue'}>
             Login
-                  </Button>
-                  <Box my='4' >
-                      Dont have an Account Yet? 
-                      <Link to={'/register'} >
-                          <Button colorScheme={'blue'} mx={'2'} variant={'link'} fontSize='md'>Sign Up</Button>
-                      </Link>
-                  </Box>
+          </Button>
+          <Box my="4">
+            Dont have an Account Yet?
+            <Link to={'/register'}>
+              <Button
+                colorScheme={'blue'}
+                mx={'2'}
+                variant={'link'}
+                fontSize="md"
+              >
+                Sign Up
+              </Button>
+            </Link>
+          </Box>
         </form>
       </VStack>
     </Container>

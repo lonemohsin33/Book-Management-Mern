@@ -20,14 +20,7 @@ const Register =  () => {
     const [file, setFile] = useState('')
     const [title, setTitle] = useState('')
      const [number, setNumber] = useState('');
-    const response = axios('http://localhost:4000/register', {
-      method: 'post',
-      body: 'formData',
-    }).then((err, res) => {
-        if (err) {return  err }
-        return err.json()
-    });
-    // console.log(response)
+   
     const imageHandler = (e) => { 
         const nfile = e.target.files[0];
         const reader = new FileReader();
@@ -39,9 +32,9 @@ const Register =  () => {
 }
 
   return (
-    <Container h={'95vh'}>
-      <VStack h={'full'} justifyContent={'center'} spacing={'12'}>
-        <Heading children="Create An Account" fontFamily={'cursive'} />
+    <Container h={'100vh'}>
+      <VStack h={'full'} justifyContent={'center'} spacing={'10'} p={'8'}>
+        <Heading children="Create An Account" fontFamily={'cursive'} mt={'4'} />
 
         <form style={{ width: '100%' }}>
           <Box display={'flex'} justifyContent={'center'}>
@@ -158,7 +151,7 @@ const Register =  () => {
           <Button my={'4'} type="submit" colorScheme={'blue'}>
             Register
           </Button>
-          <Box my="4">
+          <Box my="2">
             Already a User?
             <Link to={'/login'}>
               <Button
