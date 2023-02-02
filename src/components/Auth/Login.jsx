@@ -3,7 +3,7 @@ import {Box, Button, Container, FormLabel, Heading, Input, VStack} from '@chakra
 import { useState,useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import login from '../../redux/actions/userActions'
+import { login } from '../../redux/actions/userActions'
 
 const Login = () => {
     const [email, setEmail] = useState('')
@@ -36,7 +36,7 @@ const Login = () => {
               onChange={e => setEmail(e.target.value)}
               placeholder={'lone@gmail.com'}
               id="email"
-              focusBorderColor="blue.500"
+              focusBordercolor="blue.500"
             />
           </Box>
 
@@ -55,7 +55,7 @@ const Login = () => {
               onChange={e => setPassword(e.target.value)}
               placeholder={'Xyz@789'}
               id="password"
-              focusBorderColor="blue.500"
+              focusBordercolor="blue.500"
             />
           </Box>
           <Box>

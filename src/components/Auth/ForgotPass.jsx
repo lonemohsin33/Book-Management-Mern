@@ -28,7 +28,7 @@ const ForgotPass = () => {
               onChange={e => setEmail(e.target.value)}
               placeholder={'lone@gmail.com'}
               id="email"
-              focusBorderColor="blue.500"
+              focusBordercolor="blue.500"
             />
           </Box>
 

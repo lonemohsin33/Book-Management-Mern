@@ -2,7 +2,10 @@ import React from 'react'
 import { Button, Container, Heading, HStack, Input, Stack , VStack,Text, Image} from "@chakra-ui/react"
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { getBooks } from '../../redux/actions/userActions';
 const Book = ({ title, imageSrc, author, description, tags, price, id, addtoplaylisthandler }) => {
+  
   
   return (
     <VStack alignItems={['center', 'flex-start']} className="books">
@@ -54,13 +57,10 @@ const Book = ({ title, imageSrc, author, description, tags, price, id, addtoplay
 const Books = () => {
   const [keyword, setKeyword] = useState("")
   const [category, setCategory] = useState("")
+  const dispatch= useDispatch()
   useEffect(() => {
-    fetch('/api/books').then(res => {
-      if (res.ok) {
-        return res.json()
-      }
-    }).then(jsonResponse=>console.log(jsonResponse))
-    },[])
+    dispatch(getBooks());
+  },[dispatch])
     
  
   const addtoplaylisthandler = () => {
@@ -72,7 +72,7 @@ const Books = () => {
     <Container minH={"95vh"} minW={"container.lg"} paddingY={"8"}>
       <Heading children="ALL BOOKS" m={"8"}/ >
       
-      <Input type={"text"} value={keyword} onChange={e => setKeyword(e.target.value)} focusborderColor={"blue"} placeholder="Browse your favourite books...." />
+      <Input type={"text"} value={keyword} onChange={e => setKeyword(e.target.value)} focusbordercolor={"blue"} placeholder="Browse your favourite books...." />
 
       <HStack overflow={'auto'} py={'6'}>
         {categories.map((elem,index) => (
@@ -96,6 +96,7 @@ const Books = () => {
           id={"123"}
         addtoplaylisthandler={addtoplaylisthandler}
         />
+
 
       </Stack>
     </Container>

@@ -37,7 +37,7 @@ const Resetpass = () => {
               onChange={e => setPassword(e.target.value)}
               placeholder={'Xyz@789'}
               id="password"
-              focusBorderColor="blue.500"
+              focusBordercolor="blue.500"
             />
           </Box>
 

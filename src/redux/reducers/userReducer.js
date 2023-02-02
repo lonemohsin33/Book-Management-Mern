@@ -9,14 +9,31 @@ const userReducer = createReducer(
     loginSuccess: (state, action) => {
       state.loading = false;
       state.isAuthenticated = true;
-      state.user = action.payload.user;
-      state.message = action.payload.message;
+      // state.user = action.payload.user;
+      state.message = action.payload;
     },
     loginFail: (state, action) => {
       state.loading = false;
       state.isAuthenticated = false;
 
       state.error = action.payload;
+      // state.message = action.payload.response.data.msg;
+    },
+    signupRequest: state => {
+      state.loading = true;
+    },
+    signupSuccess: (state, action) => {
+      state.loading = false;
+      // state.isAuthenticated = true;
+      // state.user = action.payload.user;
+      state.message = action.payload;
+    },
+    signupFail: (state, action) => {
+      state.loading = false;
+      // state.isAuthenticated = false;
+
+      state.error = action.payload;
+      // state.message= action.payload;
     },
     clearError: state => {
       state.error = null;

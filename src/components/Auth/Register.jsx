@@ -12,6 +12,8 @@ import {
 } from '@chakra-ui/react';
 import { useState,useEffect} from 'react';
 import { Link } from 'react-router-dom';
+import {useDispatch} from 'react-redux'
+import { signup } from '../../redux/actions/userActions';
 
 const Register =  () => {
     const [email, setEmail] = useState('');
@@ -19,24 +21,31 @@ const Register =  () => {
     const [name, setName] = useState('')
     const [file, setFile] = useState('')
     const [title, setTitle] = useState('')
-     const [number, setNumber] = useState('');
+     const [phone, setNumber] = useState('');
    
     const imageHandler = (e) => { 
         const nfile = e.target.files[0];
         const reader = new FileReader();
         
         reader.readAsDataURL(nfile);
+        // console.log(reader.readAsDataURL(nfile))
         reader.onloadend = () => {
             setFile(reader.result);
         }
-}
+  }
+  const dispatch = useDispatch();
+  const submitHandler = e => {
+    e.preventDefault();
+    dispatch(signup(email, password, name, phone, title));
+  };
+  
 
   return (
-    <Container h={'100vh'}>
+    <Container h={'100vh'} paddingY={'8'}>
       <VStack h={'full'} justifyContent={'center'} spacing={'10'} p={'8'}>
         <Heading children="Create An Account" fontFamily={'cursive'} mt={'4'} />
 
-        <form style={{ width: '100%' }}>
+        <form style={{ width: '100%' }} onSubmit={submitHandler}>
           <Box display={'flex'} justifyContent={'center'}>
             <Avatar size={'2xl'} src={file} />
           </Box>
@@ -55,7 +64,7 @@ const Register =  () => {
               onChange={e => setTitle(e.target.value)}
               placeholder={'Mr Mrs Ms'}
               id="title"
-              focusBorderColor="blue.500"
+              focusBordercolor="blue.500"
             />
           </Box>
           <Box my={'4'}>
@@ -73,7 +82,7 @@ const Register =  () => {
               onChange={e => setName(e.target.value)}
               placeholder={'lone'}
               id="name"
-              focusBorderColor="blue.500"
+              focusBordercolor="blue.500"
             />
           </Box>
           <Box my={'6'}>
@@ -91,7 +100,7 @@ const Register =  () => {
               onChange={e => setEmail(e.target.value)}
               placeholder={'lone@gmail.com'}
               id="email"
-              focusBorderColor="blue.500"
+              focusBordercolor="blue.500"
             />
           </Box>
 
@@ -110,7 +119,7 @@ const Register =  () => {
               onChange={e => setPassword(e.target.value)}
               placeholder={'Xyz@789'}
               id="password"
-              focusBorderColor="blue.500"
+              focusBordercolor="blue.500"
             />
           </Box>
           <Box>
@@ -123,12 +132,12 @@ const Register =  () => {
             <Input
               type={'number'}
               required
-              value={number}
+              value={phone}
               fontWeight={'bold'}
               onChange={e => setNumber(e.target.value)}
               placeholder={'7889899999'}
               id="phone"
-              focusBorderColor="blue.500"
+              focusBordercolor="blue.500"
             />
           </Box>
           <Box my="4">
@@ -144,7 +153,7 @@ const Register =  () => {
               required
               fontWeight={'bold'}
               id="profile"
-              focusBorderColor="blue.500"
+              focusBordercolor="blue.500"
               onChange={imageHandler}
             />
           </Box>
