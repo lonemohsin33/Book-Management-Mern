@@ -23,6 +23,9 @@ import ForgotPass from './components/Auth/ForgotPass';
 import Resetpass from './components/Auth/Resetpass';
 import { useSelector, useDispatch } from 'react-redux'
 import CreateBook from './components/Books/CreateBook';
+import { ProtectedRoute } from 'protected-route-react';
+import Profile from './components/profile/Profile';
+import {profile} from './redux/actions/userActions'
 
 function App() {
   const dispatch = useDispatch()
@@ -34,27 +37,45 @@ function App() {
       dispatch({type:"clearError"})
     }
     if (message) {
-      if (message.status == true) {
+      
         
         alert(message)
         dispatch({type:"clearMessage"})
-      }
+      
     }
   },[dispatch, error, message])
+
+  useEffect(() => {
+    dispatch(profile())
+    
+  },[dispatch])
   return (
     <>
       <Router>
-        <Header />
+        <Header isAuthenticated={isAuthenticated} user={user} />
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="/books" element={<Books />} />
-          <Route path="/login" element={<Login />} />
+          <Route
+            path="/login"
+            element={
+              <ProtectedRoute isAuthenticated={!isAuthenticated} redirect='/profile'>
+                <Login />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/register" element={<Register />} />
-          <Route path='/forgotpassword' element={<ForgotPass />} />
-          <Route path='/resetpassword/:token' element={<Resetpass />} /> 
-          <Route path='/uploadbook' element={ <CreateBook/>}/>
-          
-          
+          <Route path="/forgotpassword" element={<ForgotPass />} />
+          <Route path="/resetpassword/:token" element={<Resetpass />} />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute isAuthenticated={isAuthenticated}>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/uploadbook" element={<CreateBook />} />
         </Routes>
         <Footer />
       </Router>

@@ -3,8 +3,11 @@ import React from 'react';
 import {RiDashboardFill, RiLogoutBoxLine, RiMenu5Fill} from 'react-icons/ri'
 import { Link } from 'react-router-dom';
 import { ColorModeSwitcher } from '../../ColorModeSwitcher';
+import { logout } from '../../redux/actions/userActions';
+import { useDispatch } from 'react-redux';
 
-const Header = () => {
+const Header = ({isAuthenticated, user}) => {
+  const dispatch = useDispatch();
   const { onClose, isOpen, onOpen } = useDisclosure()
   const ButtonLink = ({ path='/', name='Home', onClose}) => (
     <Link onClick={onClose} to={path}>
@@ -15,15 +18,17 @@ const Header = () => {
     
     
   )
-  const logoutHandler = () => {
+  const logoutHandler = (e) => {
+    e.preventDefault();
+    dispatch(logout());
     console.log("Logged Out")
     onClose();
   }
-  const isAuthenticated = false;
-  const user = {
-    role:"admin",
+  // const isAuthenticated = false;
+  // const user = {
+  //   role:"admin",
  
-  }
+  // }
   
   return (
     <>

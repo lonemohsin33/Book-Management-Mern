@@ -5,9 +5,11 @@ import axios from "axios";
 export const login = (email, password) => async (dispatch) => {
     try { 
         dispatch({ type: "loginRequest" })
-        const data = await axios.post('http://localhost:4000/login', { email, password });
-        console.log(data);
-      dispatch({ type: "loginSuccess", payload: data.data })
+        const data = await axios.post('http://localhost:4000/login', { email, password },{
+          withCredentials:true
+        });
+        // console.log(data);
+      dispatch({ type: "loginSuccess", payload: data.data})
         
     }
     catch (err) {
@@ -17,6 +19,32 @@ export const login = (email, password) => async (dispatch) => {
     }
     
 }
+export const profile = () => async (dispatch) => {
+  try {
+    dispatch({ type: 'loadUserRequest' });
+    const data = await axios.get('http://localhost:4000/me', {
+      withCredentials:true
+    });
+    console.log(data);
+    dispatch({ type: 'loadUserSuccess', payload: data.data});
+  } catch (err) {
+    console.log(err);
+    dispatch({ type: 'loadUserFail', payload: err.response.data.message });
+  }
+};
+export const logout = () => async (dispatch) => {
+  try {
+    dispatch({ type: 'logoutRequest' });
+    const data = await axios.get('http://localhost:4000/logout', {
+      withCredentials: true,
+    });
+    console.log(data);
+    dispatch({ type: 'logoutSuccess', payload: data.data});
+  } catch (err) {
+    console.log(err);
+    dispatch({ type: 'logoutFail', payload: err.response.data.msg });
+  }
+};
 export const signup =
   (email, password, name, phone, title) => async dispatch => {
     try {
