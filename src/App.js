@@ -71,7 +71,7 @@ function App() {
             path="/profile"
             element={
               <ProtectedRoute isAuthenticated={isAuthenticated}>
-                <Profile />
+                <Profile user={user} />
               </ProtectedRoute>
             }
           />

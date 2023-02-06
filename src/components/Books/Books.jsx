@@ -69,7 +69,7 @@ const Books = () => {
   }
   const categories= ["Action", "Adventure", "Fiction", "Classic", "Epic", "Sci-Fi"]
   return (
-    <Container minH={"95vh"} minW={"container.lg"} paddingY={"8"}>
+    <Container minH={"95vh"} minW={"container.lg"} paddingY={"8"} >
       <Heading children="ALL BOOKS" m={"8"}/ >
       
       <Input type={"text"} value={keyword} onChange={e => setKeyword(e.target.value)} focusbordercolor={"blue"} placeholder="Browse your favourite books...." />
