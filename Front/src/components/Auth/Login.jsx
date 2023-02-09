@@ -3,9 +3,10 @@ import {Box, Button, Container, FormLabel, Heading, Input, VStack} from '@chakra
 import { useState,useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { login } from '../../redux/actions/userActions'
+import { login,profile } from '../../redux/actions/userActions'
 
 const Login = () => {
+  
     const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const dispatch = useDispatch();
@@ -13,6 +14,9 @@ const Login = () => {
     e.preventDefault();
     dispatch(login(email, password))
   }
+ 
+
+
       
 
   return (

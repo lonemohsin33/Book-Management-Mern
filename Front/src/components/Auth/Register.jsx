@@ -19,7 +19,8 @@ const Register =  () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [name, setName] = useState('')
-    const [file, setFile] = useState('')
+  const [fileprev, setFileprev] = useState('')
+  const [file, setFile] = useState('')
     const [title, setTitle] = useState('')
      const [phone, setNumber] = useState('');
    
@@ -30,13 +31,23 @@ const Register =  () => {
         reader.readAsDataURL(nfile);
         // console.log(reader.readAsDataURL(nfile))
         reader.onloadend = () => {
-            setFile(reader.result);
+            setFileprev(reader.result);
+            setFile(nfile)
         }
   }
+  console.log(file)
   const dispatch = useDispatch();
   const submitHandler = e => {
     e.preventDefault();
-    dispatch(signup(email, password, name, phone, title));
+    const myform = new FormData();
+    myform.append("email", email)
+    myform.append('password', password);
+    myform.append('name', name);
+    myform.append('phone', phone);
+    myform.append('title', title);
+    myform.append('file', file);
+    
+    dispatch(signup(myform));
   };
   
 
@@ -47,7 +58,7 @@ const Register =  () => {
 
         <form style={{ width: '100%' }} onSubmit={submitHandler}>
           <Box display={'flex'} justifyContent={'center'}>
-            <Avatar size={'2xl'} src={file} />
+            <Avatar size={'2xl'} src={fileprev} />
           </Box>
           <Box my={'4'}>
             <FormLabel

@@ -58,11 +58,13 @@ const Header = ({isAuthenticated, user}) => {
                   path="/books/classics"
                   name={'Classics'}
                 />
-                <ButtonLink
-                  onClose={onClose}
-                  path="/books/modern-books"
-                  name="Modern Books"
-                />
+                { isAuthenticated && (
+                  <ButtonLink
+                    onClose={onClose}
+                    path="/uploadbook"
+                    name="Upload A Book"
+                  />)
+                }
                 <ButtonLink onClose={onClose} path="/about" name="About" />
                 <HStack
                   justifyContent={'space-evenly'}

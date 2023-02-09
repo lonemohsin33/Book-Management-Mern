@@ -4,14 +4,16 @@ import { useDispatch } from 'react-redux';
 import {Link} from 'react-router-dom'
 import { uploadBook } from '../../redux/actions/userActions';
 
-const CreateBook = () => {
+const CreateBook = ({user}) => {
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [author, setAuthor] = useState("")
     const [ISBN, setISBN] = useState('');
     const [category, setCategory] = useState("")
-    const [releasedAt, setreleasedAt] = useState('');
-    const [file, setFile] = useState('');
+  const [releasedAt, setReleasedAt] = useState('');
+  const [tags, setTags] = useState('');
+  const [fileprev, setFileprev] = useState('');
+  const [file, setFile]= useState('')
 
     const imageHandler = (e) => {
         const nfile = e.target.files[0]
@@ -19,38 +21,45 @@ const CreateBook = () => {
 
         reader.readAsDataURL(nfile)
         reader.onloadend = () => {
-            setFile(reader.result)
+          setFileprev(reader.result)
+          setFile(nfile)
+          
         }
         
-    }
+  }
+  
+  console.log(file);
     const dispatch = useDispatch();
     const handleSubmit = (e) => {
         e.preventDefault();
         const myform = new FormData()
-        myform.append("title", title)
+      myform.append("title", title)
+      myform.append('author', author);
         myform.append("excerpt", description)
         myform.append("ISBN", ISBN)
         myform.append("releasedAt", releasedAt)
-        myform.append("category", category)
-        myform.append("userId", 1234567891012345)
+      myform.append("category", category)
+      myform.append('tags', tags)
+      myform.append("userId", user._id)
+      myform.append("bookcover", file.name)
+      console.log(myform.excerpt)
 
         dispatch(uploadBook(myform))
         
     }
     
   return (
-    <Container h={'100vh'} paddingY={'10'}>
+    <Container minh={'100vh'} paddingY={'10'}>
       <VStack h="full" justifyContent={'center'} spacing={'12'}>
         <Heading
           children="Upload Your Book"
           fontFamily={'cursive'}
-          
           fontWeight="bold"
           mt={'6'}
         />
         <form style={{ width: '100%' }} onSubmit={handleSubmit}>
           <Box display={'flex'} justifyContent={'center'}>
-            <Avatar size={'xl'} src={file} />
+            <Avatar size={'xl'} src={fileprev}  />
           </Box>
           <Box my={'4'}>
             <FormLabel
@@ -83,6 +92,23 @@ const CreateBook = () => {
               onChange={e => setDescription(e.target.value)}
               type={'text'}
               placeholder={'This is a story of Killing A MockingBird'}
+              focusBordercolor="blue.500"
+            />
+          </Box>
+          <Box marginY={'4'}>
+            <FormLabel
+              fontFamily={'cursive'}
+              fontSize={'md'}
+              fontWeight={'bold'}
+            >
+              Released At
+            </FormLabel>
+            <Input
+              required
+              value={releasedAt}
+              onChange={e => setReleasedAt(e.target.value)}
+              type={'date'}
+              placeholder={'YYYY-MM-DD'}
               focusBordercolor="blue.500"
             />
           </Box>
@@ -133,6 +159,23 @@ const CreateBook = () => {
               value={category}
               onChange={e => setCategory(e.target.value)}
               type={'text'}
+              placeholder={'Fiction'}
+              focusBordercolor="blue.500"
+            />
+          </Box>
+          <Box my={'4'}>
+            <FormLabel
+              fontFamily={'cursive'}
+              fontSize={'md'}
+              fontWeight={'bold'}
+            >
+              Tags
+            </FormLabel>
+            <Input
+              required
+              value={tags}
+              onChange={e => setTags(e.target.value)}
+              type={'text'}
               placeholder={'Fiction, bio'}
               focusBordercolor="blue.500"
             />
@@ -147,7 +190,6 @@ const CreateBook = () => {
             <Input
               type={'file'}
               accept={'image/*'}
-              required
               fontWeight={'bold'}
               id="profile"
               focusBordercolor="blue.500"

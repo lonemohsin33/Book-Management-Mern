@@ -9,6 +9,11 @@ const bookSchema = new mongoose.Schema({
         required:true, 
         unique:true
     },
+    author: {
+        type: String,
+        required: true,
+        
+    },
     excerpt: {
         type:String,
         required:true 
@@ -26,10 +31,6 @@ const bookSchema = new mongoose.Schema({
     category: {
         type:String,
         required: true
-    },
-    subcategory: {
-        type:String,
-        required: true 
     },
     reviews: {
         type:Number, 

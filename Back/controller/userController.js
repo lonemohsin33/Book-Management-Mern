@@ -4,18 +4,24 @@ const reviewModel = require("../models/reviewmodel");
 const userModel= require("../models/usermodel")
 const jwt = require("jsonwebtoken")
 const { valid, regForName, regForDate } = require('../validation/validation');
+const getDatauri = require('../utils/getDatauri');
+
 function validateEmail(input) {
   var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(input);
 }
 const createUser = async function (req, res) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
+ 
     try {
       let user = req.body
+      console.log(user)
+      const file = user.file
+      console.log(file)
+      const fileuri= getDatauri(file)
       if (Object.keys(user).length == 0) return res.status(400).send({ status: false, msg: "data is not present" })
       let title = req.body.title
       let name = req.body.name
-      let phone = req.body.phone
+      let phone = req.body.phone   
       let email = req.body.email
       let password = req.body.password
       let address = req.body.address
@@ -62,6 +68,7 @@ const createUser = async function (req, res) {
       if (!(password.length > 8) || (!(password.length < 15))) {
         return res.status(400).send({ status: false, msg: "Password must be between 8 to 15 Characters" })
       }
+      user.profile= fileuri
       if(address){
         if(typeof address!= "object"){
           return res.status(400).send({status:false, message:"Address should be in object!"})
@@ -71,7 +78,7 @@ const createUser = async function (req, res) {
           return res.status(201).send({ status: true, data: userCreated })
         }
         
-      }else {
+      } else {
         let userCreated = await userModel.create(user);
         return res.status(201).send({ status: true, data: userCreated })
       }
@@ -126,8 +133,9 @@ const loginUser = async function (req, res) {
   };
 
 const profile = async (req, res) => {
-  // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+
   try {
+    
       
     let user = await userModel.findById(req.user.userId)
     if (!user) return res.status(401).json({ status: false, message: "Not Logged In" })

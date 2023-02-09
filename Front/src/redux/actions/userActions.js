@@ -46,20 +46,18 @@ export const logout = () => async (dispatch) => {
   }
 };
 export const signup =
-  (email, password, name, phone, title) => async dispatch => {
+  (form) => async dispatch => {
     try {
       dispatch({ type: 'signupRequest' });
       const data = await axios.post(
         'http://localhost:4000/register',
-        {
-          email,
-          password,
-          name,
-          phone,
-          title,
+        form, {
+          headers: {
+            'Content-type': "multipart/form-data",
+          },withCredentials:true
         }
       );
-      console.log(data)
+      console.log(data.data)
       
       dispatch({ type: 'signupSuccess', payload: data.data});
     } catch (err) {
@@ -82,18 +80,16 @@ export const getBooks = () => async (dispatch) => {
   }
   }
 
-  export const uploadBook = (title, excerpt, author, ISBN, releasedAt, category,userId) => async dispatch => {
+  export const uploadBook = (form) => async dispatch => {
     try {
       dispatch({ type: 'bookUpRequest' });
-      const books = await axios.post('http://localhost:4000/books', {
-        title,
-        excerpt,
-        author,
-        ISBN,
-        releasedAt,
-        category,
-        userId
-      });
+      const books = await axios.post(
+        'http://localhost:4000/books',
+        form,
+        {
+          withCredentials: true,
+        }
+      );
       console.log(books);
 
       dispatch({ type: 'bookUpSuccess', payload: books.data.message });

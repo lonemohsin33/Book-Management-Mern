@@ -19,7 +19,7 @@ const createBook = async function(req, res){
 
         let data = req.body
         if(Object.keys(data).length==0) return res.status(400).send({status:false, message:"Data is Not Present!"})
-        const {title, excerpt, userId, ISBN,category,releasedAt, subcategory}= data
+        const {title, excerpt, userId, ISBN,category,releasedAt, subcategory,bookcover}= data
         if(!title) return res.status(400).send({status:false, message:"Title is not Present! "})
         if(!excerpt) return res.status(400).send({status:false, message:"excerpt is not Present! "})
         if(!userId) return res.status(400).send({status:false, message:"userId is not Present! "})
@@ -29,7 +29,7 @@ const createBook = async function(req, res){
 
 
         if(valid(title)==false) return res.status(400).send({status:false, message:"Invalid Title"})
-        if(valid(excerpt)==false) return res.status(400).send({status:false, message:"Invalid excerpt"})
+        // if(valid(excerpt)==false) return res.status(400).send({status:false, message:"Invalid excerpt"})
         if(valid(ISBN)==false) return res.status(400).send({status:false, message:"Invalid ISBN"})
         if(valid(category)==false) return res.status(400).send({status:false, message:"Invalid category"})
         

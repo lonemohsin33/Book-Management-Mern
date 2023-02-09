@@ -7,6 +7,10 @@ const userSchema = new mongoose.Schema({
         required: true,
         enum: ["Mr", "Mrs", "Miss"]
     },
+    profile: {
+        type: String,
+        required:true
+    },
     name: {
         type:String, 
         required: true

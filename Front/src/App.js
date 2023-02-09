@@ -8,8 +8,11 @@ import {
   HStack,
   VStack,
   Code,
+  
   Grid,
   theme,
+  
+  
 } from '@chakra-ui/react';
 import { ColorModeSwitcher } from './ColorModeSwitcher';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -26,60 +29,99 @@ import CreateBook from './components/Books/CreateBook';
 import { ProtectedRoute } from 'protected-route-react';
 import Profile from './components/profile/Profile';
 import {profile} from './redux/actions/userActions'
+import {toast} from 'react-hot-toast'
+import ChangePassword from './components/profile/ChangePassword';
+import UpdateProfile from './components/profile/UpdateProfile';
+import Loader from './components/layouts/Loader';
 
 function App() {
   const dispatch = useDispatch()
-  const { isAuthenticated, user, error,message } = useSelector(state => state.user)
+  const { isAuthenticated, user, error,message, loading} = useSelector(state => state.user)
   console.log(error, message)
   useEffect(()=>{
     if (error) {
-      alert(error)
+      toast.error(error)
+        
       dispatch({type:"clearError"})
     }
     if (message) {
+      toast.success(message)
       
-        
-        alert(message)
         dispatch({type:"clearMessage"})
       
     }
-  },[dispatch, error, message])
+  }, [dispatch, error, message])
 
-  useEffect(() => {
-    dispatch(profile())
-    
-  },[dispatch])
+   useEffect(() => {
+     dispatch(profile());
+   }, [dispatch]);
+  
+  
+  
+  
   return (
-    <>
-      <Router>
-        <Header isAuthenticated={isAuthenticated} user={user} />
-        <Routes>
-          <Route path="/" element={<Homepage />} />
-          <Route path="/books" element={<Books />} />
-          <Route
-            path="/login"
-            element={
-              <ProtectedRoute isAuthenticated={!isAuthenticated} redirect='/profile'>
-                <Login />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="/register" element={<Register />} />
-          <Route path="/forgotpassword" element={<ForgotPass />} />
-          <Route path="/resetpassword/:token" element={<Resetpass />} />
-          <Route
-            path="/profile"
-            element={
-              <ProtectedRoute isAuthenticated={isAuthenticated}>
-                <Profile user={user} />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="/uploadbook" element={<CreateBook />} />
-        </Routes>
-        <Footer />
-      </Router>
-    </>
+    <Router>
+      {loading ? (
+        <Loader/>
+      ) : (
+        <>
+          <Header isAuthenticated={isAuthenticated} user={user} />
+          <Routes>
+            <Route path="/" element={<Homepage />} />
+            <Route path="/books" element={<Books />} />
+            <Route
+              path="/login"
+              element={
+                <ProtectedRoute
+                  isAuthenticated={!isAuthenticated}
+                  redirect="/profile"
+                >
+                  <Login />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/register" element={<Register />} />
+            <Route path="/forgotpassword" element={<ForgotPass />} />
+            <Route path="/resetpassword/:token" element={<Resetpass />} />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                  <Profile user={user} />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/changepassword"
+              element={
+                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                  <ChangePassword />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/updateprofile"
+              element={
+                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                  <UpdateProfile />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/uploadbook"
+              element={
+                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                  <CreateBook user={user} />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* <Route path="/uploadbook" element={} /> */}
+          </Routes>
+          <Footer />
+        </>
+      )}
+    </Router>
   );
 }
 

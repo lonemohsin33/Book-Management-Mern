@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Container, Heading, HStack, Input, Stack , VStack,Text, Image} from "@chakra-ui/react"
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getBooks } from '../../redux/actions/userActions';
 const Book = ({ title, imageSrc, author, description, tags, price, id, addtoplaylisthandler }) => {
   
@@ -57,6 +57,9 @@ const Book = ({ title, imageSrc, author, description, tags, price, id, addtoplay
 const Books = () => {
   const [keyword, setKeyword] = useState("")
   const [category, setCategory] = useState("")
+
+const {message} = useSelector(state=> state.book)
+
   const dispatch= useDispatch()
   useEffect(() => {
     dispatch(getBooks());
@@ -69,39 +72,47 @@ const Books = () => {
   }
   const categories= ["Action", "Adventure", "Fiction", "Classic", "Epic", "Sci-Fi"]
   return (
-    <Container minH={"95vh"} minW={"container.lg"} paddingY={"8"} >
-      <Heading children="ALL BOOKS" m={"8"}/ >
-      
-      <Input type={"text"} value={keyword} onChange={e => setKeyword(e.target.value)} focusbordercolor={"blue"} placeholder="Browse your favourite books...." />
+    <Container minH={'95vh'} minW={'container.lg'} paddingY={'8'}>
+      <Heading children="ALL BOOKS" m={'8'} />
+
+      <Input
+        type={'text'}
+        value={keyword}
+        onChange={e => setKeyword(e.target.value)}
+        focusbordercolor={'blue'}
+        placeholder="Browse your favourite books...."
+      />
 
       <HStack overflow={'auto'} py={'6'}>
-        {categories.map((elem,index) => (
-          <Button minW={'60'} key={index} onClick={() => (setCategory(elem))}><Text children={ elem} /> </Button>
-          
-        )) }
+        {categories.map((elem, index) => (
+          <Button minW={'60'} key={index} onClick={() => setCategory(elem)}>
+            <Text children={elem} />{' '}
+          </Button>
+        ))}
       </HStack>
-      <Stack direction={["column", "row"]}
+      <Stack
+        direction={['column', 'row']}
         flexWrap="wrap"
-        justifyContent={["center", "space-evenly"]}
-        alignItems={["center", "flex-start"]}
+        justifyContent={['center', 'space-evenly']}
+        alignItems={['center', 'flex-start']}
       >
-        <Book author={"mohsin"}
-          
-          title={"My Book"}
-
-          description={"This is my book"}
-          tags={["fiction",'bio']}
-          imageSrc={"hello"}
-          price={"500"}
-          id={"123"}
-        addtoplaylisthandler={addtoplaylisthandler}
-        />
-
-
+        {message.length > 0 &&
+          message.map(elem => (
+            <Book
+              key ={elem._id}
+              author={elem.author}
+              title={elem.title}
+              description={elem.description}
+              tags={elem.tags}
+              imageSrc={elem.bookcover}
+              price={elem.price}
+              id={elem._id}
+              addtoplaylisthandler={addtoplaylisthandler}
+            />
+          ))}
       </Stack>
     </Container>
-    
-  )
+  );
 }
 
 export default Books

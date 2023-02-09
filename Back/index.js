@@ -6,6 +6,7 @@ const app = express();
 const cookieparser = require('cookie-parser')
 const cors= require('cors')
 const { config } = require('dotenv')
+const cloudinary= require('cloudinary')
 
 config({
     path:'./config/config.js'
@@ -31,8 +32,14 @@ app.use(function (req, res, next) {
   next();
 });
 
+cloudinary.v2.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET,
+});
 
-mongoose.connect("mongodb+srv://lonemohsin33:Diabetes7889%40@functionup.aq5cty2.mongodb.net/project3?retryWrites=true&w=majority", {
+
+mongoose.connect(process.env.MONGO_STRING, {
     useNewUrlParser: true 
 })
 .then( () => console.log("MongoDb is connected"))
