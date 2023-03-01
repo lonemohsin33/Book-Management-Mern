@@ -30,7 +30,9 @@ Use of JSONWEBTOKEN for Authentication and Authorization purpose.
 ### Use Of Cookie-Parser
 I have used the Token which will be available from Jsonwebtoken and sent it as  cokiee for the session to keep the user Logged in.
 
-
+### Reeact Hooks
+I have used React hooks like use state and use Effect. 
+Use effect is used to render changes after any updation/change in the provided state. 
 ### npm run start
 
 Command to run the server in development mode!
@@ -46,3 +48,5 @@ It gives us an inbuilt theme for changing the light mode and dark mode of the ap
 ### use Of Cloudinary for uploading pictures/videos(if needed) 
 
 ### Use of MongoDB as a DataBase
+
+### This is yet in the devlopement phase so it is not ready to use yet.
