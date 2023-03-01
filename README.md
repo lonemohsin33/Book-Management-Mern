@@ -33,6 +33,9 @@ I have used the Token which will be available from Jsonwebtoken and sent it as  
 ### Reeact Hooks
 I have used React hooks like use state and use Effect. 
 Use effect is used to render changes after any updation/change in the provided state. 
+
+#Scripts
+
 ### npm run start
 
 Command to run the server in development mode!
